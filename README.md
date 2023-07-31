@@ -1,6 +1,6 @@
 # web-components-project
 
-A simple web application to try the web components technology using the native Web Components APIs, using TypeScript.
+A web application to try the web components technology using the native Web Components APIs, using TypeScript.
 
 ## Available Scripts
 
