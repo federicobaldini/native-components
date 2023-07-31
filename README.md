@@ -1,4 +1,4 @@
-# web-components-project
+# web-components-app
 
 A web application to try the web components technology using the native Web Components APIs, using TypeScript.
 
