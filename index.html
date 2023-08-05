@@ -4,12 +4,24 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Web Components App</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        --color-primary: #a4e6fc;
+        font-family: sans-serif;
+      }
+    </style>
     <script src="/src/components/tooltip.ts"></script>
     <script src="/src/components/confirm-hyperlink.ts"></script>
   </head>
   <body>
     <p>
-      <wc-tooltip text="This is the tooltip text!">Web Components</wc-tooltip>
+      <wc-tooltip text="This is the tooltip text!">
+        <span>Web Components</span>
+      </wc-tooltip>
       <span>are awesome!</span>
     </p>
     <a is="wc-confirm-hyperlink" href="https://www.google.com">Google</a>
