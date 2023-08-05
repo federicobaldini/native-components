@@ -22,18 +22,45 @@ class Tooltip extends HTMLElement {
       // Set the initial shadow DOM content with inline styles and a slot for the outside content.
       this.shadowRoot.innerHTML = `
         <style>
-          span {
-            position: relative;
-          }
           div {
+            font-weight: normal;
+            max-width: 100px;
             background: #000000;
             color: #ffffff;
             position: absolute;
+            top: 32px;
+            right: 0;
             z-index: 10;
+            padding: 4px 8px;
+            border-radius: 8px;
+            box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.26);
+          }
+
+          :host {
+            position: relative;
+            background: var(--color-primary, #cccccc);
+            padding: 8px;
+            border-radius: 8px;
+          }
+
+          :host-context(p) {
+            font-weight: bold;
+          }
+
+          ::slotted() {
+            border-bottom: 1px solid #ff0000;
+          }
+          
+          .icon {
+            background: #000000;
+            color: #ffffff;
+            padding: 2px 7px;
+            text-align: center;
+            border-radius: 50%;
           }
         </style>
         <slot>default</span>
-        <span>(?)</span>
+        <span class="icon">?</span>
       `;
     }
   }
