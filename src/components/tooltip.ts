@@ -59,7 +59,7 @@ class Tooltip extends HTMLElement {
             border-radius: 50%;
           }
         </style>
-        <slot>default</span>
+        <slot>default</slot>
         <span class="icon">?</span>
       `;
     }
@@ -117,9 +117,6 @@ class Tooltip extends HTMLElement {
           "mouseleave",
           this.hideTooltipHandler.bind(this)
         );
-
-        // Append the tooltip icon to the custom tooltip element's shadow DOM.
-        this.shadowRoot.appendChild(this.iconElement);
       }
     }
   }
@@ -140,6 +137,28 @@ class Tooltip extends HTMLElement {
         "mouseleave",
         this.hideTooltipHandler.bind(this)
       );
+    }
+  }
+
+  public static get observedAttributes(): Array<string> {
+    return ["text"];
+  }
+
+  public attributeChangedCallback(
+    name: string,
+    oldValue: any,
+    newValue: any
+  ): void {
+    if (oldValue === newValue) {
+      return;
+    }
+
+    switch (name) {
+      case "text":
+        this.text = newValue;
+        break;
+      default:
+        break;
     }
   }
 }
