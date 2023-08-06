@@ -131,11 +131,11 @@ class Tooltip extends HTMLElement {
       // Remove event listeners for mouseenter and mouseleave.
       this.iconElement.removeEventListener(
         "mouseenter",
-        this.showTooltipHandler.bind(this)
+        this.showTooltipHandler
       );
       this.iconElement.removeEventListener(
         "mouseleave",
-        this.hideTooltipHandler.bind(this)
+        this.hideTooltipHandler
       );
     }
   }
