@@ -14,6 +14,16 @@
         font-family: sans-serif;
       }
     </style>
+    <script>
+      setTimeout(() => {
+        const tooltipElement = document.querySelector("wc-tooltip");
+
+        console.log(tooltipElement);
+        if (tooltipElement) {
+          tooltipElement.setAttribute("text", "New tooltip text!");
+        }
+      }, 1000);
+    </script>
     <script src="/src/components/tooltip.ts"></script>
     <script src="/src/components/confirm-hyperlink.ts"></script>
   </head>
