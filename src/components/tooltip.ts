@@ -67,6 +67,9 @@ class Tooltip extends HTMLElement {
     }
   }
 
+  /**
+   * Update the tooltip's visibility and render the tooltip container.
+   */
   private render(): void {
     if (this.visible) {
       // Create a <div> element to serve as the tooltip container.
