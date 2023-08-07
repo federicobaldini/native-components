@@ -5,6 +5,7 @@ class Tooltip extends HTMLElement {
   private iconElement: HTMLElement | null;
   private containerElement: HTMLElement | null;
   private text: string;
+  private visible: boolean;
 
   /**
    * Constructor for creating a new Tooltip instance.
@@ -14,6 +15,7 @@ class Tooltip extends HTMLElement {
     this.iconElement = null;
     this.containerElement = null;
     this.text = "";
+    this.visible = false;
 
     // Create and attach a shadow DOM to the custom tooltip element.
     this.attachShadow({ mode: "open" });
@@ -65,30 +67,38 @@ class Tooltip extends HTMLElement {
     }
   }
 
+  private render(): void {
+    if (this.visible) {
+      // Create a <div> element to serve as the tooltip container.
+      this.containerElement = document.createElement("div");
+
+      // Set the text content of the tooltip container to display the tooltip message.
+      this.containerElement.textContent = this.text;
+
+      if (this.shadowRoot) {
+        // Append the tooltip container to the custom tooltip element's shadow DOM.
+        this.shadowRoot.appendChild(this.containerElement);
+      }
+    } else if (this.containerElement && this.shadowRoot) {
+      // Remove the tooltip container from the custom tooltip element's shadow DOM.
+      this.shadowRoot.removeChild(this.containerElement as Node);
+    }
+  }
+
   /**
    * Event handler to show the tooltip.
    */
   private showTooltipHandler(): void {
-    // Create a <div> element to serve as the tooltip container.
-    this.containerElement = document.createElement("div");
-
-    // Set the text content of the tooltip container to display the tooltip message.
-    this.containerElement.textContent = this.text;
-
-    if (this.shadowRoot) {
-      // Append the tooltip container to the custom tooltip element's shadow DOM.
-      this.shadowRoot.appendChild(this.containerElement);
-    }
+    this.visible = true;
+    this.render();
   }
 
   /**
    * Event handler to hide the tooltip.
    */
   private hideTooltipHandler(): void {
-    if (this.containerElement && this.shadowRoot) {
-      // Remove the tooltip container from the custom tooltip element's shadow DOM.
-      this.shadowRoot.removeChild(this.containerElement as Node);
-    }
+    this.visible = false;
+    this.render();
   }
 
   /**
