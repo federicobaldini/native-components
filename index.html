@@ -13,6 +13,10 @@
         --color-primary: #a4e6fc;
         font-family: sans-serif;
       }
+
+      body {
+        margin: 32px;
+      }
     </style>
     <script>
       setTimeout(() => {
@@ -26,6 +30,7 @@
     </script>
     <script src="/src/components/tooltip.ts"></script>
     <script src="/src/components/confirm-hyperlink.ts"></script>
+    <script src="/src/components/modal.ts"></script>
   </head>
   <body>
     <p>
@@ -35,5 +40,10 @@
       <span>are awesome!</span>
     </p>
     <a is="wc-confirm-hyperlink" href="https://www.google.com">Google</a>
+    <wc-modal>
+      <p>With the confimation you agree to pay the full amount</p>
+    </wc-modal>
+    <p>Please confirm your choice.</p>
+    <button>Show Details & Confirm</button>
   </body>
 </html>
