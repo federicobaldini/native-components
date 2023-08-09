@@ -19,10 +19,9 @@
       }
     </style>
     <script>
-      setTimeout(() => {
-        const tooltipElement = document.querySelector("wc-tooltip");
+      const tooltipElement = document.querySelector("wc-tooltip");
 
-        console.log(tooltipElement);
+      setTimeout(() => {
         if (tooltipElement) {
           tooltipElement.setAttribute("text", "New tooltip text!");
         }
@@ -45,5 +44,13 @@
     </wc-modal>
     <p>Please confirm your choice.</p>
     <button>Show Details & Confirm</button>
+    <script>
+      const modalElement = document.querySelector("wc-modal");
+      const buttonElement = document.querySelector("button");
+
+      buttonElement.addEventListener("click", () => {
+        modalElement.setAttribute("open", true);
+      });
+    </script>
   </body>
 </html>
