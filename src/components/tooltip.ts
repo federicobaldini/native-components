@@ -153,10 +153,18 @@ class Tooltip extends HTMLElement {
     }
   }
 
+  /**
+   * Specifies the attributes to be observed for changes.
+   * In this case, it observes changes to the "text" attribute.
+   */
   public static get observedAttributes(): Array<string> {
     return ["text"];
   }
 
+  /**
+   * Called when the observed attributes change.
+   * Updates the tooltip content based on the "text" attribute value.
+   */
   public attributeChangedCallback(
     name: string,
     oldValue: any,
