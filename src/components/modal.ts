@@ -60,7 +60,7 @@ class Modal extends HTMLElement {
             padding: 16px;
           }
 
-          header h1 {
+          ::slotted(h1) {
             margin: 0;
             font-size: 24px;
           }
@@ -83,7 +83,7 @@ class Modal extends HTMLElement {
         <div id="backdrop"></div>
         <div id="modal">
           <header>
-            <h1>Please Confirm</h1>
+            <slot name="title"></slot>
           </header>
           <section id="main">
             <slot></slot>
@@ -94,6 +94,13 @@ class Modal extends HTMLElement {
           </section>
         </div>
       `;
+
+      // Set up a slotchange event listener to display assigned nodes of the "main" slot.
+      const slots: NodeListOf<HTMLSlotElement> =
+        this.shadowRoot.querySelectorAll("slot");
+      slots[1].addEventListener("slotchange", (): void => {
+        console.dir(slots[1].assignedNodes());
+      });
     }
   }
 
@@ -101,7 +108,7 @@ class Modal extends HTMLElement {
    * Event handler to show the modal.
    */
   private showModalHandler(): void {
-    if (this.backdropElement && this.modalElement) {
+    if (this.backdropElement && this.modalElement && !this.isOpen) {
       this.isOpen = true;
 
       // Update styles to make the modal and backdrop visible and interactive.
@@ -116,7 +123,7 @@ class Modal extends HTMLElement {
    * Event handler to hide the modal.
    */
   private hideModalHandler(): void {
-    if (this.backdropElement && this.modalElement) {
+    if (this.backdropElement && this.modalElement && this.isOpen) {
       this.isOpen = false;
 
       // Update styles to hide the modal and backdrop.
@@ -125,6 +132,24 @@ class Modal extends HTMLElement {
       this.modalElement.style.opacity = "0";
       this.modalElement.style.pointerEvents = "none";
     }
+  }
+
+  /**
+   * Event handler for the "Cancel" button click.
+   * Hides the modal and dispatches a "cancel" event.
+   */
+  private cancelClickHandler(): void {
+    this.hideModalHandler();
+    this.dispatchEvent(new Event("cancel"));
+  }
+
+  /**
+   * Event handler for the "Confirm" button click.
+   * Hides the modal and dispatches a "confirm" event.
+   */
+  private confirmClickHandler(): void {
+    this.hideModalHandler();
+    this.dispatchEvent(new Event("confirm"));
   }
 
   /**
@@ -144,14 +169,14 @@ class Modal extends HTMLElement {
     if (this.cancelButton) {
       this.cancelButton.addEventListener(
         "click",
-        this.hideModalHandler.bind(this)
+        this.cancelClickHandler.bind(this)
       );
     }
 
     if (this.confirmButton) {
       this.confirmButton.addEventListener(
         "click",
-        this.hideModalHandler.bind(this)
+        this.confirmClickHandler.bind(this)
       );
     }
   }
@@ -162,11 +187,11 @@ class Modal extends HTMLElement {
    */
   public disconnectedCallback(): void {
     if (this.cancelButton) {
-      this.cancelButton.removeEventListener("click", this.hideModalHandler);
+      this.cancelButton.removeEventListener("click", this.cancelClickHandler);
     }
 
     if (this.confirmButton) {
-      this.confirmButton.removeEventListener("click", this.hideModalHandler);
+      this.confirmButton.removeEventListener("click", this.confirmClickHandler);
     }
   }
 
@@ -189,6 +214,10 @@ class Modal extends HTMLElement {
   ): void {
     switch (name) {
       case "open":
+        if (newValue === this.isOpen) {
+          return;
+        }
+
         if (newValue) {
           this.showModalHandler();
         } else {
