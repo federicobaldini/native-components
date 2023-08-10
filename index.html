@@ -40,6 +40,7 @@
     </p>
     <a is="wc-confirm-hyperlink" href="https://www.google.com">Google</a>
     <wc-modal>
+      <h1 slot="title">Please Confirm</h1>
       <p>With the confimation you agree to pay the full amount</p>
     </wc-modal>
     <p>Please confirm your choice.</p>
@@ -50,6 +51,14 @@
 
       buttonElement.addEventListener("click", () => {
         modalElement.setAttribute("open", true);
+      });
+
+      modalElement.addEventListener("confirm", () => {
+        console.log("Confirm...");
+      });
+
+      modalElement.addEventListener("cancel", () => {
+        console.log("Cancel...");
       });
     </script>
   </body>
