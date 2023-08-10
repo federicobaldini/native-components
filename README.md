@@ -1,6 +1,6 @@
 # web-components-app
 
-A web application to try the web components technology using the native Web Components APIs, using TypeScript.
+A web application to try the web components technology using the native Web Components APIs and TypeScript.
 
 ## Available Scripts
 
