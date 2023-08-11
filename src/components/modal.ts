@@ -40,7 +40,7 @@ class Modal extends HTMLElement {
 
           #modal {
             position: fixed;
-            top: 15vh;
+            top: 0;
             left: 25%;
             width: 50%;
             max-height: 480px;
@@ -54,6 +54,7 @@ class Modal extends HTMLElement {
             overflow-y: auto;
             opacity: 0;
             pointer-events: none;
+            transition: 0.3s ease-out;
           }
 
           header {
@@ -116,6 +117,7 @@ class Modal extends HTMLElement {
       this.backdropElement.style.pointerEvents = "all";
       this.modalElement.style.opacity = "1";
       this.modalElement.style.pointerEvents = "all";
+      this.modalElement.style.top = "15vh";
     }
   }
 
@@ -131,6 +133,7 @@ class Modal extends HTMLElement {
       this.backdropElement.style.pointerEvents = "none";
       this.modalElement.style.opacity = "0";
       this.modalElement.style.pointerEvents = "none";
+      this.modalElement.style.top = "0";
     }
   }
 
@@ -179,6 +182,13 @@ class Modal extends HTMLElement {
         this.confirmClickHandler.bind(this)
       );
     }
+
+    if (this.backdropElement) {
+      this.backdropElement.addEventListener(
+        "click",
+        this.cancelClickHandler.bind(this)
+      );
+    }
   }
 
   /**
@@ -192,6 +202,13 @@ class Modal extends HTMLElement {
 
     if (this.confirmButton) {
       this.confirmButton.removeEventListener("click", this.confirmClickHandler);
+    }
+
+    if (this.backdropElement) {
+      this.backdropElement.removeEventListener(
+        "click",
+        this.cancelClickHandler
+      );
     }
   }
 
